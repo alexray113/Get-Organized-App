@@ -3,6 +3,28 @@
 {% block title %}Reminders{% endblock %}
 
 {% block body %}
+<h1>Reminders</h1>
+
+<h3>Create New Reminder</h3>
+
+<form action="/action_page.php">
+    <label for="reminder_name">Reminder Name:</label><br>
+    <input type="text" id="rname" name="rname"><br>
+    <label for="reminderdt">Reminder (date and time):</label><br>
+    <input type="datetime-local" id="reminderdt" name="reminderdt"><br>
+    <label for="frequency_num">Repeat every:</label><br>
+    <input type="number" id="frequency_num" name="frequency_num">
+    <select name="frequencies" id="frequency">
+        <option value="hours">Hours</option>
+        <option value="days">Days</option>
+        <option value="weeks">Weeks</option>
+        <option value="months">Months</option>
+        <option value="months">Years</option>
+      </select><br>
+    <input type="submit" value="Create New Reminder">
 
 
+<h3>Saved Reminders</h3>
+
+<li><a href='/user_profile'>Return to Dashboard</a></li>
 {% endblock %}

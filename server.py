@@ -24,12 +24,21 @@ def display_login():
 
     return render_template('user_login.html')
 
-@app.route('/home')
-def return_home():
-    """Navigates back to homepage"""
+@app.route('/braindump')
+def display_braindump():
+    """Displays braindump page"""
 
-    return render_template('homepage.html')
+    return render_template('braindump.html')
 
+@app.route('/reminders')
+def display_reminders():
+
+    return render_template('reminders.html')
+
+@app.route('/user_profile')
+def display_user_profile():
+
+    return render_template('user_profile.html')
 
 @app.route('/users/<user_id>')
 def show_user(user_id):
@@ -54,17 +63,20 @@ def login_user():
     db_password = user_object.password
     # saves user_id from user_object to variable user_id
     user_id = user_object.user_id
-   
-    if password != db_password:
-        # flash that password is incorrect and do not store id in session
-        flash("User password incorrect.")
-    else:
+    print(password)
+    print(db_password)
+    if password == db_password:
         # stores id in session and logs user in
         session['user_id'] = user_id
         # flashes statement indicating login successful
         flash("You have logged in successfully!")
-    # redirects to user profile page and flashes appropriate message
-    return redirect(f'/users/{user_id}')
+         # redirects to user profile page and flashes appropriate message
+        return redirect(f'/users/{user_id}')
+    else:
+        # flashes statement indicating login successful
+        flash("Login password incorrect.")
+    
+    return render_template("user_login.html")
 
 # app route to / using POST method
 @app.route('/users', methods=['POST'])
