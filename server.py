@@ -35,20 +35,25 @@ def display_reminders():
 
     return render_template('reminders.html')
 
-@app.route('/user_profile')
+@app.route('/dashboard')
 def display_user_profile():
 
-    return render_template('user_profile.html')
+    user_id = session['user_id']
+    user_email = session['email']
+
+    return render_template("user_profile.html", user_email=user_email, user_id=user_id)
 
 @app.route('/users/<user_id>')
 def show_user(user_id):
     """Display user profile page"""
     # saves user object to get_user_by_id by using crud.py function to query
     # user database
-    get_user_by_id = crud.get_user_by_id(user_id)
+    user_object = crud.get_user_by_id(user_id)
+    user_email = user_object.email
+    user_id = user_object.user_id
     # renders user_profile.html template and passes user object (get_user_by_id) to
     # html jinja template variable user
-    return render_template('user_profile.html', user=get_user_by_id)
+    return render_template('user_profile.html', user_id=user_id, user_email=user_email)
 
 @app.route("/login", methods=['POST'])
 def login_user():
@@ -63,11 +68,13 @@ def login_user():
     db_password = user_object.password
     # saves user_id from user_object to variable user_id
     user_id = user_object.user_id
-    print(password)
-    print(db_password)
+    user_email = user_object.email
+
     if password == db_password:
         # stores id in session and logs user in
         session['user_id'] = user_id
+        session['email'] = user_email
+
         # flashes statement indicating login successful
         flash("You have logged in successfully!")
          # redirects to user profile page and flashes appropriate message
@@ -82,7 +89,13 @@ def login_user():
 @app.route('/users', methods=['POST'])
 def user_sign_up():
     """Check if user email already in database, if not, create a new user profile."""
-    # pulls email input from login form on homepage.html and saves to user_email
+    # pulls fname input from login form on homepage.html and saves to user_fname
+    # variable
+    user_fname = request.form.get('fname')
+    # pulls fname input from login form on homepage.html and saves to user_fname
+    # variable
+    user_lname = request.form.get('lname')
+    # pulls lname input from login form on homepage.html and saves to user_lname
     # variable
     user_email= request.form.get('email')
     # pulls password input from login form on homepage.html and saves to password
@@ -98,7 +111,7 @@ def user_sign_up():
         # if user doesn't exist, calls create_user crud.py function and passes
         # POST request variables as arguments to create new user. Saves to new_user
         # variable
-        new_user = crud.create_user(user_email, password)
+        new_user = crud.create_user(user_fname, user_lname, user_email, password)
         # adds new user to db
         db.session.add(new_user)
         # commits new user to db and then flashes success message

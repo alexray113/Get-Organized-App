@@ -5,11 +5,13 @@ db = SQLAlchemy()
 class User(db.Model):
     """A user."""
 
-    __tablename__ = "user"
+    __tablename__ = "users"
 
     user_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True, nullable=False)
+    fname = db.Column(db.String(30))
+    lname = db.Column(db.String(50))
     email = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(50),nullable=False)
 
@@ -40,18 +42,19 @@ class User_reminder(db.Model):
 
     ur_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     reminder_id = db.Column(db.Integer, db.ForeignKey('reminder.reminder_id'))
-    user_id = db.Column(db.Integer, db.ForeignKey("user.user_id"))      
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))      
     creation_date = db.Column(db.DateTime)
     reminder_date = db.Column(db.DateTime)
     reminder_frequency = db.Column(db.Integer)
-    contact_id = db.Column(db.Integer, db.ForeignKey("user_contact.contact_id"))
+    reminder_measure = db.Column(db.String(30))
+    contact_id = db.Column(db.Integer, db.ForeignKey("user_contact.contact_id"), nullable=True)
 
     user = db.relationship("User", back_populates="user_reminder")
     reminder = db.relationship("Reminder", back_populates='reminder_rel')
     user_contact = db.relationship("User_contact", back_populates="contact")
 
     def __repr__(self):
-        return f'<User_Reminders ur_id={self.ur_id} user_id={self.user_id} remind_type={self.remind_type}>'
+        return f'<User_Reminder ur_id={self.ur_id} user_id={self.user_id} remind_type={self.remind_type}>'
 
 class User_contact(db.Model):
     """User's stored contacts"""
@@ -59,7 +62,7 @@ class User_contact(db.Model):
     __tablename__ = "user_contact"
 
     contact_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     fname = db.Column(db.String(50), nullable=False)
     lname = db.Column(db.String(50))
     phone = db.Column(db.Integer, nullable=False)
@@ -77,7 +80,7 @@ class Brain_dump(db.Model):
     __tablename__ = "brain_dump"
 
     bd_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     text_body = db.Column(db.Text)
 
     user = db.relationship("User", back_populates="user_r")
@@ -91,7 +94,7 @@ class User_news(db.Model):
     __tablename__ = "user_news"
 
     saved_article_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     article_id = db.Column(db.Integer, db.ForeignKey('positive_news.article_id'), nullable=False)
     comment_id = db.Column(db.Text)
 
