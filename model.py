@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -43,7 +44,6 @@ class User_reminder(db.Model):
     ur_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     reminder_id = db.Column(db.Integer, db.ForeignKey('reminder.reminder_id'))
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))      
-    creation_date = db.Column(db.DateTime)
     reminder_date = db.Column(db.DateTime)
     reminder_frequency = db.Column(db.Integer)
     reminder_measure = db.Column(db.String(30))
@@ -54,7 +54,7 @@ class User_reminder(db.Model):
     user_contact = db.relationship("User_contact", back_populates="contact")
 
     def __repr__(self):
-        return f'<User_Reminder ur_id={self.ur_id} user_id={self.user_id} remind_type={self.remind_type}>'
+        return f'<User_Reminder ur_id={self.ur_id} user_id={self.user_id}>'
 
 class User_contact(db.Model):
     """User's stored contacts"""

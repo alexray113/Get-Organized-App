@@ -36,20 +36,9 @@ lnames = ['Smith', 'Rogers', 'Davids', 'Martinez', 'Jacobson', 'Jeffries', 'Lope
 for n in range(10):
     email = f'user{n}@test.com'  # Voila! A unique email!
     password = 'test'
+    fname = fnames[n]
+    lname = lnames[n]
 
-    fname_count = 0
-    for name in fnames:
-        fname = choice(fnames)
-        fname_count += 1
-        if fname_count > 10:
-            break
-
-    lname_count = 0
-    for name in lnames:
-        lname = choice(lnames)
-        lname_count += 1
-        if lname_count > 10:
-            break
 
     # create a User object with above data
     new_user = crud.create_user(fname, lname, email, password)

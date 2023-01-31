@@ -7,9 +7,17 @@
 
 <h3>Create New Reminder</h3>
 
-<form action="/action_page.php">
+<form action="/create_reminders" method="POST">
     <label for="reminder_name">Reminder Name:</label><br>
     <input type="text" id="rname" name="rname"><br>
+    <label for="reminder_name">Reminder Type (rotating reminders are only available for recurring reminders):</label><br>
+    <select name="rtype" id="rtype">
+      <option value="1">Text</option>
+      <option value="2">Email</option>
+      <option value="3">Push</option>
+      <option value="4">Contact</option>
+      <option value="5">Rotating</option>
+    </select><br>
     <label for="reminderdt">Reminder (date and time):</label><br>
     <input type="datetime-local" id="reminderdt" name="reminderdt"><br>
     <label for="frequency_num">Repeat every:</label><br>
@@ -19,9 +27,10 @@
         <option value="days">Days</option>
         <option value="weeks">Weeks</option>
         <option value="months">Months</option>
-        <option value="months">Years</option>
+        <option value="years">Years</option>
       </select><br>
     <input type="submit" value="Create New Reminder">
+  </form>
 
 
 <h3>Saved Reminders</h3>

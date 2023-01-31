@@ -136,6 +136,44 @@ def show_all_users():
     # jinja template
     return render_template('users.html', all_users=all_users)
 
+@app.route('/create_reminders', methods=["POST"])
+def create_reminder():
+
+    user_id = session['user_id']
+    reminder_type = request.form.get('rtype')
+    reminder_name = request.form.get('rname')
+    reminder_dt = request.form.get('reminderdt')
+    reminder_frequency = request.form.get('frequency_num')
+    reminder_measure = request.form.get('frequencies')
+
+    reminder = crud.create_user_reminder(reminder_type,
+                                        user_id, 
+                                        reminder_dt,
+                                        reminder_frequency,
+                                        reminder_measure
+                                        )
+
+    db.session.add(reminder)
+    db.session.commit()
+
+
+    return redirect('/reminders')
+
+@app.route('/submit_bd', methods=["POST"])
+def create_bd():
+
+    user_id = session['user_id']
+    text_body = request.form.get("bd_content")
+
+    braindump = crud.create_braindump(user_id, text_body)
+                                        
+
+    db.session.add(braindump)
+    db.session.commit()
+
+
+    return redirect('/braindump')
+
 
 
 

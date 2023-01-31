@@ -31,12 +31,23 @@ def create_reminder_type(type):
 
     return reminder_type
 
-def create_user_reminder(reminder_id, user_id, creation_date, reminder_date, reminder_frequency, reminder_measure):
+def create_user_reminder(reminder_id, user_id, reminder_date, reminder_frequency, reminder_measure):
 
-    reminder = User_reminder(reminder_id=reminder_id, user_id=user_id, creation_date=creation_date, reminder_date=reminder_date, reminder_frequency=reminder_frequency, reminder_measure=reminder_measure)
+    reminder = User_reminder(reminder_id=reminder_id, 
+                            user_id=user_id, 
+                            reminder_date=reminder_date, 
+                            reminder_frequency=reminder_frequency, 
+                            reminder_measure=reminder_measure)
 
     return reminder
 
-    if __name__ == '__main__':
-        from server import app
-        connect_to_db(app)
+def create_braindump(user_id, text_body):
+
+    braindump = Brain_dump(user_id=user_id, text_body=text_body)
+
+    return braindump
+
+if __name__ == '__main__':
+    from server import app
+        
+    connect_to_db(app)
