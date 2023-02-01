@@ -3,10 +3,10 @@
 from model import db, User, Reminder, User_reminder, User_contact, Brain_dump, User_news, Positive_news, connect_to_db
 
 
-def create_user(fname, lname, email, password):
+def create_user(fname, lname, phone, email, password):
     """Create and return a new user."""
 
-    user = User(fname=fname, lname=lname, email=email, password=password)
+    user = User(fname=fname, lname=lname, phone=phone, email=email, password=password)
 
     return user
 

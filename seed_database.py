@@ -38,10 +38,11 @@ for n in range(10):
     password = 'test'
     fname = fnames[n]
     lname = lnames[n]
+    phone = 5555555555
 
 
     # create a User object with above data
-    new_user = crud.create_user(fname, lname, email, password)
+    new_user = crud.create_user(fname, lname, phone, email, password)
 
     model.db.session.add(new_user)
 
