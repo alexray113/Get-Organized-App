@@ -1,5 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy_utils import PhoneNumber
 from datetime import datetime
 
 db = SQLAlchemy()
@@ -14,7 +13,6 @@ class User(db.Model):
                         primary_key=True, nullable=False)
     fname = db.Column(db.String(30))
     lname = db.Column(db.String(50))
-    phone = db.Column(db.Unicode(20))
     email = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(50),nullable=False)
 

@@ -30,6 +30,7 @@ model.db.session.commit()
 
 
 # loop that generates ten user objects
+
 fnames = ['Joe', 'Sally', 'Alex', 'Roger', 'Bob', 'Jerry', 'Jenna', 'Susie', 'Cindy', 'Mike']
 lnames = ['Smith', 'Rogers', 'Davids', 'Martinez', 'Jacobson', 'Jeffries', 'Lopez', 'Rodriguez', 'Simon', 'Phillips']
 for n in range(10):
@@ -37,12 +38,10 @@ for n in range(10):
     password = 'test'
     fname = fnames[n]
     lname = lnames[n]
-    phone = 5555555555
-
 
 
     # create a User object with above data
-    new_user = crud.create_user(fname, lname, phone, email, password)
+    new_user = crud.create_user(fname, lname, email, password)
 
     model.db.session.add(new_user)
 

@@ -97,7 +97,6 @@ def user_sign_up():
     user_lname = request.form.get('lname')
     # pulls lname input from login form on homepage.html and saves to user_lname
     # variable
-    user_phone = request.form.get('phone')
     user_email= request.form.get('email')
     # pulls password input from login form on homepage.html and saves to password
     # variable
@@ -112,7 +111,7 @@ def user_sign_up():
         # if user doesn't exist, calls create_user crud.py function and passes
         # POST request variables as arguments to create new user. Saves to new_user
         # variable
-        new_user = crud.create_user(user_fname, user_lname, user_phone, user_email, password)
+        new_user = crud.create_user(user_fname, user_lname, user_email, password)
         # adds new user to db
         db.session.add(new_user)
         # commits new user to db and then flashes success message
