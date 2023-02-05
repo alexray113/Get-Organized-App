@@ -1,4 +1,4 @@
-#!/Users/alexhahn/src/Projects/nd-reminders/env/bin/python
+#!/Users/alexhahn/src/Projects/nd-reminders/env/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

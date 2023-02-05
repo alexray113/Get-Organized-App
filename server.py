@@ -32,11 +32,13 @@ def display_braindump():
 
 @app.route('/reminders')
 def display_reminders():
+    """Displays reminders page"""
 
     return render_template('reminders.html')
 
 @app.route('/dashboard')
 def display_user_profile():
+    """Returns to dashboard of user in session"""
 
     user_id = session['user_id']
     user_email = session['email']
@@ -57,6 +59,7 @@ def show_user(user_id):
 
 @app.route("/login", methods=['POST'])
 def login_user():
+    """Logs user in"""
     # pulls email input from form on homepage.html and saves to user_email variable
     user_email= request.form.get('email')
     # pulls password input from form on homepage.html and saves to password varialbe
@@ -85,6 +88,16 @@ def login_user():
     
     return render_template("user_login.html")
 
+@app.route("/logout")
+def logout():
+    """ Log out """
+
+    if "user_id" in session:
+        session.clear()
+        flash("You have been logged out successfully. Please come back soon!")
+    
+    return redirect("/")
+
 # app route to / using POST method
 @app.route('/users', methods=['POST'])
 def user_sign_up():
@@ -97,7 +110,6 @@ def user_sign_up():
     user_lname = request.form.get('lname')
     # pulls lname input from login form on homepage.html and saves to user_lname
     # variable
-    user_phone = request.form.get('phone')
     user_email= request.form.get('email')
     # pulls password input from login form on homepage.html and saves to password
     # variable
@@ -112,7 +124,7 @@ def user_sign_up():
         # if user doesn't exist, calls create_user crud.py function and passes
         # POST request variables as arguments to create new user. Saves to new_user
         # variable
-        new_user = crud.create_user(user_fname, user_lname, user_phone, user_email, password)
+        new_user = crud.create_user(user_fname, user_lname, user_email, password)
         # adds new user to db
         db.session.add(new_user)
         # commits new user to db and then flashes success message
@@ -144,7 +156,7 @@ def create_reminder():
     reminder_type = request.form.get('rtype')
     reminder_name = request.form.get('rname')
     reminder_dt = request.form.get('reminderdt')
-    reminder_frequency = request.form.get('frequency_num')
+    reminder_frequency = request.form.get('frequency-num')
     reminder_measure = request.form.get('frequencies')
 
     reminder = crud.create_user_reminder(reminder_type,
@@ -174,6 +186,8 @@ def create_bd():
 
 
     return redirect('/braindump')
+
+    
 
 
 

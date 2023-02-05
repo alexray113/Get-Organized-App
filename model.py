@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from sqlalchemy_utils import PhoneNumber
+
 
 db = SQLAlchemy()
 
@@ -14,13 +14,12 @@ class User(db.Model):
                         primary_key=True, nullable=False)
     fname = db.Column(db.String(30))
     lname = db.Column(db.String(50))
-    phone = db.Column(db.Unicode(20))
     email = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(50),nullable=False)
 
     user_reminder = db.relationship("User_reminder", back_populates="user")
     user_r = db.relationship("Brain_dump", back_populates="user")
-    user_contact = db.relationship("User_contact", back_populates="user")
+    
 
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email}>'
@@ -49,32 +48,12 @@ class User_reminder(db.Model):
     reminder_date = db.Column(db.DateTime)
     reminder_frequency = db.Column(db.Integer)
     reminder_measure = db.Column(db.String(30))
-    contact_id = db.Column(db.Integer, db.ForeignKey("user_contact.contact_id"), nullable=True)
 
     user = db.relationship("User", back_populates="user_reminder")
     reminder = db.relationship("Reminder", back_populates='reminder_rel')
-    user_contact = db.relationship("User_contact", back_populates="contact")
 
     def __repr__(self):
         return f'<User_Reminder ur_id={self.ur_id} user_id={self.user_id}>'
-
-class User_contact(db.Model):
-    """User's stored contacts"""
-
-    __tablename__ = "user_contact"
-
-    contact_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    fname = db.Column(db.String(50), nullable=False)
-    lname = db.Column(db.String(50))
-    phone = db.Column(db.Integer, nullable=False)
-    email = db.Column(db.String(100), nullable=False)
-
-    contact = db.relationship("User_reminder", back_populates="user_contact")
-    user = db.relationship("User", back_populates="user_contact")
-
-    def __repr__(self):
-        return f'<User_Contact contact_id={self.contact_id} fname={self.fname}>'
 
 class Brain_dump(db.Model):
     """Stores user's brain dumps"""

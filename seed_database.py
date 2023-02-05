@@ -18,15 +18,10 @@ model.connect_to_db(server.app)
 model.db.create_all()
 
 # reminder types
-reminder_text = crud.create_reminder_type('text')
-model.db.session.add(reminder_text)
 reminder_email = crud.create_reminder_type('email')
 model.db.session.add(reminder_email)
 reminder_push = crud.create_reminder_type('push')
 model.db.session.add(reminder_push)
-reminder_contact = crud.create_reminder_type('contact')
-model.db.session.add(reminder_contact)
-model.db.session.commit() 
 
 
 # loop that generates ten user objects
@@ -38,11 +33,10 @@ for n in range(10):
     password = 'test'
     fname = fnames[n]
     lname = lnames[n]
-    phone = 5555555555
 
 
     # create a User object with above data
-    new_user = crud.create_user(fname, lname, phone, email, password)
+    new_user = crud.create_user(fname, lname, email, password)
 
     model.db.session.add(new_user)
 

@@ -1,19 +1,31 @@
 {% extends 'base.html' %}
 
-{% block title %}Reminders{% endblock %}
-
+{% block title %}Brain Dumps{% endblock %}
+{% block head %}{% endblock %}
 {% block body %}
-<h1>Brain Dumps</h1>
-<form action = "/submit_bd" method="POST">
-    Take some time to empty your brain here:
-    <br>
-    <textarea rows = "7" cols = "60" name = "bd_content">
-    </textarea><br>
-    <input type = "submit" value = "submit" />
+    <div id="wrapper">
+        <div class="braindump">
+            <header id="header">
+                <h1>Create a Brain Dump</h1>
+            </header>
+            <main class="main" id="bd-main">
+                <form action="/submit_bd" id="bd-form" method="POST">
+                    <textarea
+                        rows="7"
+                        cols="60"
+                        name="bd_content"
+                        placeholder="Take some time to empty your brain here..."></textarea>
+                    <br>
+                        <button type="submit" name="submit" value="submit">Submit</button>
+                    </form>
+                    <header id="header">
+                        <h2>Past Brain Dumps</h2>
+                    </header>
+                    <ul id="bd-ul-list" ></ul>
+                </main>
+            </div>
+        </div>
 
-<h2>Past Brain Dumps</h2>
+        <a href='/dashboard'>Return to Dashboard</a>
 
-
-<li><a href='/dashboard'>Return to Dashboard</a></li>
-
-{% endblock %}
+    {% endblock %}
