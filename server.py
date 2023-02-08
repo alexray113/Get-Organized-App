@@ -18,6 +18,13 @@ def view_homepage():
 # renders homepage.html template
     return render_template('homepage.html')
 
+# app route to homepage
+@app.route("/maps")
+def view_map():
+    """Load the homepage."""
+# renders homepage.html template
+    return render_template('maps.html')
+
 @app.route('/user_login')
 def display_login():
     """Display Login Page."""

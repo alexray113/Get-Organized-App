@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Errand Planner{% endblock %}
+{% block head %} 
+<script src="https://kit.fontawesome.com/12ab44e214.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block body %}
+
+<div class="jumbotron">
+<div class="container-fluid">
+<h1>Determine Distance and Travel Time</h1>
+<p>This page will help you calculate the total distance and time for all needed errands</p>
+<form class="form-horizontal" id="address-form">
+    <div class="form-group">
+        <label for="from" class="col-xs-2 control label"><i class="fa-solid fa-location-crosshairs"></i></label>
+        <div class="col-xs-4">
+            <input type="text" id="input1" placeholder="Enter Starting Destination Address" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="to" class="col-xs-2 control label"><i class="fa-solid fa-location-crosshairs"></i></label>
+        <div class="col-xs-4">
+            <input type="text" id="input2" placeholder="Destination" class="form-control">
+        </div>
+    </div>
+</form>
+    <div class="col-xs-offset-2 col-xs-10">
+        <button class="btn btn-info btn-lg" onclick="calcRoute();"><i class="fas fa-map-signs"></i></button>
+    </div>
+</div>
+<div class="container-fluid">
+    <div id="map"></div>
+    <button id="display-directions">
+        Display Directions
+      </button>
+    <div id="output">
+            
+    </div>
+
+</div>
+</div>
+<a href='/dashboard'>Return to Dashboard</a>
+<script type="text/javascript" src="/static/js/maps.js"></script>
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBT7tEFidZlr59xsrzm_eLkoda9trKU5Ww&libraries=places&callback=initMap">
+</script>
+{% endblock %}
