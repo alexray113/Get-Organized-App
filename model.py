@@ -44,6 +44,7 @@ class User_reminder(db.Model):
 
     ur_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     reminder_id = db.Column(db.Integer, db.ForeignKey('reminder.reminder_id'))
+    reminder_name = db.Column(db.String(50))
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))      
     reminder_date = db.Column(db.DateTime)
     reminder_frequency = db.Column(db.Integer)

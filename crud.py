@@ -1,8 +1,8 @@
 """CRUD operations."""
 
-from model import db, User, Reminder, User_reminder, Brain_dump, User_news, Positive_news, connect_to_db
+from model import db, User, Reminder, User_reminder, Brain_dump, connect_to_db
 
-
+# user functions
 def create_user(fname, lname, email, password):
     """Create and return a new user."""
 
@@ -25,21 +25,39 @@ def get_user_by_email(email):
 
     return User.query.filter(User.email == email).first()
 
+# reminder functions
+
 def create_reminder_type(type):
 
     reminder_type = Reminder(type=type)
 
     return reminder_type
 
-def create_user_reminder(reminder_id, user_id, reminder_date, reminder_frequency, reminder_measure):
+def create_user_reminder(reminder_id, user_id, reminder_name, reminder_date, reminder_frequency, reminder_measure):
 
     reminder = User_reminder(reminder_id=reminder_id, 
                             user_id=user_id, 
+                            reminder_name = reminder_name,
                             reminder_date=reminder_date, 
                             reminder_frequency=reminder_frequency, 
                             reminder_measure=reminder_measure)
 
     return reminder
+
+def get_reminder_by_id(user_id):
+    """Get and return reminder by ID"""
+
+    return User_reminder.query.filter_by(user_id=user_id).all()
+
+def delete_reminder(ur_id):
+
+    reminder = User_reminder.query.get(ur_id)
+    db.session.delete(reminder)
+    db.session.commit()
+
+    return "Deleted Successfully!"
+
+# brain dump functions
 
 def create_braindump(user_id, text_body):
 
@@ -47,6 +65,33 @@ def create_braindump(user_id, text_body):
 
     return braindump
 
+def delete_bd(bd_id):
+
+    bd = Brain_dump.query.get(bd_id)
+    db.session.delete(bd)
+    db.session.commit()
+
+    return "Deleted Successfully!"
+
+def get_bd_by_id(user_id):
+    """Get and return braindumps by ID"""
+
+    return Brain_dump.query.filter_by(user_id=user_id).all()
+
+def return_bd_by_id(bd_id):
+    """Get and return braindump by ID"""
+
+    return Brain_dump.query.get(bd_id)
+
+def update_bd_by_id(bd_id, text_body):
+
+    bd = Brain_dump.query.get(bd_id)
+    bd.text_body = text_body
+    db.session.commit()
+
+    return "Updated Successfully!"
+
+    
 if __name__ == '__main__':
     from server import app
         

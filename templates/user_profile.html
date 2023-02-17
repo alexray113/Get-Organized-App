@@ -1,23 +1,45 @@
 {% extends 'base.html' %}
 
 {% block title %}User Dashboard{% endblock %}
+{% block head %}
+{% endblock %}
+
 
 {% block body %}
-<h1>What would you like to do?</h1>
 
+<h1>Hello, {{user_fname}}!</h1>
+<h3>What would you like to do?</h3>
 <li><a href="/reminders">Create New Reminder</a></li>
 <li><a href="/braindump">Create New Braindump</a></li>
 <li><a href="/maps">Plan My Errands</a></li>
 
 
-<p>
-  {{ user_email }}
-  {{ user_id }}
-</p>
+<h3>Saved Reminders</h3>
+        <ul>
+          {% for reminder in user_reminders %}
+          <li id="delete{{ reminder.ur_id }}">
+              <p>Reminder name: {{ reminder.reminder_name}}</p>
+              <p>Date: {{reminder.reminder_date}}</p>
+              <p>Repeats: {{reminder.reminder_frequency}} {{reminder.reminder_measure}}</p>
+              <input type="hidden" name="reminder_id" value="{{ reminder.ur_id}}"></input>
+              <button type="button" id="{{ reminder.ur_id }}" class="delete-reminder">Delete Reminder</button>
+          </li>
+          {% endfor %}
+        </ul>
 
-<li><a href="/">Return to Homepage</a></li>
-</li>
-<li><a href="/logout">Logout</a> 
-</li>
-
+<h3>Saved Braindumps</h3>
+<ul>
+  {% for bd in user_bds %}
+  <form action="/edit-braindump", method="POST">
+  <li id="delete{{ bd.bd_id }}" id="bd-li">
+      <label>{{ bd.bd_id }}</label>
+      <p id="{{ bd.bd_id }}" class="bd-text">{{bd.text_body}}</p>
+      <input type="hidden" id="bd_id" name="bd_id" value="{{ bd.bd_id}}"></input>
+      <button type="submit">Edit Braindump</button>
+      <button class="delete-bd" id="{{ bd.bd_id }}" type="button">Delete Braindump</button>
+     </li>
+    </form>
+  {% endfor %}
+</ul>
+<script type="text/javascript" src="/static/js/app.js"></script>
 {% endblock %}

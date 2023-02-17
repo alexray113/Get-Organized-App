@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Brain Dumps{% endblock %}
+{% block head %}{% endblock %}
+{% block body %}
+    <div id="wrapper">
+        <div class="braindump">
+            <header id="header">
+                <h1>Edit a Brain Dump</h1>
+            </header>
+            <main class="main" id="bd-main">
+                <form action="/update-bd"  method="POST">
+                    <input type="hidden" id="bd_id" name="bd_id" value="{{ bd_id}}"></input>
+                    <textarea rows="7" cols="60" id="edit-bd" name="edit-bd-text">{{ bd_text }}</textarea>
+                    <br>
+                        <button type="submit" name="{{ bd_id }}" value="submit">Submit</button>
+                    </form>
+
+    <a href='/dashboard'>Return to Dashboard</a>
+    <script type="text/javascript" src="/static/js/app.js"></script>
+    {% endblock %}
