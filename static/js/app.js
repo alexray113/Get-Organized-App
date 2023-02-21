@@ -1,23 +1,25 @@
 // delete reminders
 const deleteBtns = document.querySelectorAll(".delete-to-do");
 
-for (const rBtn of deleteBtns) {
-    rBtn.addEventListener('click', (evt) => {
+for (const toDoBtn of deleteBtns) {
+    toDoBtn.addEventListener('click', (evt) => {
         evt.preventDefault();
         
         fetch('/delete-to-do', {
             method: "POST",
-            body: JSON.stringify({'btn_id': rBtn.id}),
+            body: JSON.stringify({'btn_id': toDoBtn.id}),
             headers: {
                 'Content-Type': 'application/json'
                     },
+                
         })
 
         .then((response) => {console.log(response)
             return response
         })
         .then((responseJson) => {
-            document.querySelector(`#delete${rBtn.id}`).remove();
+            document.querySelector(`#delete${toDoBtn.id}`).remove();
+            console.log(responseJson)
         })
 
         

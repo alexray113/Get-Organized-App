@@ -7,25 +7,31 @@
 
 {% block body %}
 <div id="main-div" class="container text-center">
+  <div id="heading-div">
 <h1>Hello, {{user_fname}}!</h1>
+  </div>
+
 <h3>What would you like to do?</h3>
-<i class="bi bi-check-circle-fill"> </i><a href="/to-dos">Create New To Do</a><br>
- <a href="/braindump">Create New Braindump</a><br>
-<a href="/maps">Plan an Errand</a>
+<div class="container text-center">
+<i class="bi bi-check-circle-fill"> </i> <a href="/to-dos">Create New To Do</a><br>
+<i class="bi bi-emoji-smile-fill"></i> <a href="/braindump">Create New Braindump</a><br>
+<i class="bi bi-geo-alt-fill"></i> <a href="/maps">Plan an Errand</a>
 </div>
-<div class="container">
+<div class="container text-center">
 <div id="main-div" class="row" >
 <div class="col-6">
 <h3>Saved To-Dos</h3>
-        <ul>
+      <ul>
           {% for to_do in user_to_dos %}
-          <span><id="delete{{ to_do.to_do_id }}">
-              <span>{{ to_do.to_do_item}}</span>
-              <input type="hidden" name="to_do_id" value="{{ to_do.to_do_id }}"></input>
-              <button type="button" id="{{ to_do.to_do_id }}" class="delete-to-do btn btn-primary"><i class="bi bi-check-lg"></i></button>
-          </span> 
+        <form action="/delete-to-do" method="POST">
+        <span id="delete{{ to_do.to_do_id }}"> 
+          <span>{{ to_do.to_do_item}}</span>
+          <button type="button" id="{{ to_do.to_do_id }}" class="delete-to-do btn btn-info btn-sm"><i class="bi bi-check-lg"></i></button>
+          <input type="hidden" name="to_do_id" value="{{ to_do.to_do_id }}"></input>
+        </span> 
+        </form>
           {% endfor %}
-        </ul>
+      </ul>
 </div>
 <div class="col-6">
 <h3>Saved Braindumps</h3>

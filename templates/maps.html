@@ -5,38 +5,33 @@
 {% endblock %}
 {% block body %}
 
-    <div id="main-div" class="container text-center">
-        <div class="container text-center">
+    <div id="main-div" class="container">
             <h1>Determine Distance and Travel Time</h1>
-            <p>This page will help you calculate the total distance and time for all needed
-                errands</p>
-            <form action="/display-directions" method="POST" class="form-horizontal" id="address-form">
-                <div class="form-group">
-                    <div class="col-xs-4">
-                        <label for="from"><i class="bi bi-geo-alt-fill"></i> Starting Point:</label>
-                        <input type="text" id="input1" placeholder="Enter Starting Destination Address" class="form-control"></div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-4">
-                            <label for="to"><i class="bi bi-geo-alt-fill"></i> Destination:</label>
-                            <input type="text" id="input2" placeholder="Enter Final Destination Address" class="form-control"></div>
-                        </div>
-                    </form>
-                    <div class="col-xs-offset-2 col-xs-10">
-                        <button id="display-directions" class="btn btn-light btn-lg">
-                            <i class="bi bi-signpost-2-fill"></i>
-                        </button>
-                    </div>
+            <p>Knowing the time it takes to travel to a location will help you better plan when to leave!</p>
+        <form action="/display-directions" method="POST" class="form-horizontal" id="address-form">
+            <label for="from"><i class="bi bi-geo-alt-fill"></i> Starting Point:</label>
+            <input class="form-control" type="text" id="input1" placeholder="Enter Starting Destination Address">
+            <label for="to"><i class="bi bi-geo-alt-fill"></i> Destination:</label>
+            <input class="form-control" type="text" id="input2" placeholder="Enter Final Destination Address">
+        </form>
+            <button id="display-directions" class="btn btn-info">
+            <i class="bi bi-signpost-2-fill"></i>
+            </button>
+    </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <div id="map"></div>
                 </div>
-                <div class="container-fluid">
-                    <div id="map">
-                    </div>
-                    <div id="output">
-                    </div>
+                <div class="col-6">
+                    <div id="output"></div>
+                </div>
             </div>
+        </div>
             <div id="link-div" class="container text-center">
             <a href='/dashboard'>Return to Dashboard</a>
             </div>
+    </div>
             <script type="text/javascript" src="/static/js/maps.js"></script>
             <script
                 async="async"

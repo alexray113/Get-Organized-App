@@ -5,7 +5,6 @@ from flask import (Flask, render_template, request, flash, session,
 
 from model import connect_to_db, db
 import crud
-import onesignal
 
 from jinja2 import StrictUndefined
 
@@ -67,13 +66,15 @@ def display_to_dos():
 def display_user_profile():
     """Returns to dashboard of user in session"""
 # retrieves user info from session to stay logged in
-    user_id = session['user_id']
-    user_email = session['email']
-    user_fname = session['fname']
-# redirects back to user dashboard
-    return redirect(f'/users/{user_id}')
 
-# app route to display user dashboard page
+    if 'user_id' not in session:
+        return redirect("/user_login")
+
+    user_id = session['user_id']
+    return redirect(f'/users/{user_id}') 
+        
+    
+    # app route to display user dashboard page
 @app.route('/users/<user_id>')
 def show_user(user_id):
     """Display user profile page"""
@@ -113,7 +114,6 @@ def login_user():
     # saves user_object password, user id, email, and first name to variables
         db_password = user_object.password
         user_id = user_object.user_id
-        existing_user_email = user_object.email
         user_fname = user_object.fname
 
         if password == db_password:
@@ -122,8 +122,7 @@ def login_user():
             session['user_id'] = user_id
             session['email'] = user_email
             session['fname'] = user_fname
-        
-
+            
             # flashes statement indicating login successful
             flash("You have logged in successfully!")
             # redirects to user profile page
@@ -133,9 +132,7 @@ def login_user():
             flash("Login password incorrect.")
     else:
         flash("No user found. Please create an account.")
-    # if user_object.password == None:
-    #     flash("You don't have an account. Please use create an account.")
-    #     return redirect("/create-account")
+ 
     
     return render_template("user_login.html")
 
@@ -151,7 +148,7 @@ def logout():
     return redirect("/")
 
 # app route to create account page
-@app.route('/users', methods=['POST'])
+@app.route('/create-account', methods=['POST'])
 def user_sign_up():
     """Check if user email already in database, if not, create a new user profile."""
     # pulls fname input from login form on homepage.html and saves to user_fname
@@ -193,38 +190,6 @@ def user_sign_up():
     # redirects to user profile when sign up is successful and flashes appropriate message
     return redirect(f'/users/{user_id}') 
 
-@app.route('/create_reminders', methods=["POST"])
-def create_reminder():
-
-    user_id = session['user_id']
-    reminder_type = request.form.get('rtype')
-    reminder_name = request.form.get('rname')
-    reminder_date = request.form.get('reminderdt')
-    reminder_frequency = request.form.get('frequency-num')
-    reminder_measure = request.form.get('frequencies')
-
-    reminder = crud.create_user_reminder(reminder_type,
-                                        user_id,
-                                        reminder_name, 
-                                        reminder_date,
-                                        reminder_frequency,
-                                        reminder_measure
-                                        )
-
-    db.session.add(reminder)
-    db.session.commit()
-
-    email_address = session['email']
-    date = reminder_date
-    text = reminder_name
-
-    onesignal.send_email()
-    print(onesignal.send_email())
-    print("**********************")
-
-
-    return redirect('/reminders')
-
 @app.route('/create-to-do', methods=["POST"])
 def create_to_do():
     # gets user id from session and pulls text from bd input form
@@ -239,6 +204,17 @@ def create_to_do():
 
 
     return redirect('/to-dos')
+
+# allows user to delete reminders
+@app.route("/delete-to-do", methods=['POST']) 
+def delete_to_do():
+    
+    to_do_id = int(request.json.get("btn_id"))
+    print(to_do_id)
+    print("************")
+    delete_to_do = crud.delete_to_do(to_do_id)
+    
+    return delete_to_do
 
 @app.route('/submit_bd', methods=["POST"])
 def create_bd():
@@ -255,14 +231,6 @@ def create_bd():
 
     return redirect('/braindump')
 
-# allows user to delete reminders
-@app.route("/delete-to-do", methods=['POST']) 
-def delete_to_do():
-    
-    to_do_id = int(request.json.get("btn_id"))
-    delete_to_do = crud.delete_to_do(to_do_id)
-    
-    return delete_to_do
 
 #allows user to edit braindump
 @app.route("/edit-braindump", methods=['POST'])
@@ -295,10 +263,7 @@ def delete_bds():
 
     return delete_braindump
 
-# @app.route("/display-directions", methods=['POST'])
-# def display_directions():
 
-#     time = request.json.get(routes: routes[0].legs[0].duration.text)
 
 
 

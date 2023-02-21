@@ -5,11 +5,28 @@
 
 
 #map {
+    align-items: center;
     width: 500px;
     height: 500px;
 }
 
 #bd-item {
     padding-bottom: 25;
+}
+
+#heading-div {
+    padding-bottom: 50px;
+}
+
+#link-div {
+    padding-top: 100px;
+}
+
+#form-div {
+    justify-items: left;
+}
+
+.flash-msg {
+    background-color: yellow;
 }
 
