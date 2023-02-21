@@ -17,21 +17,25 @@
 <i class="bi bi-emoji-smile-fill"></i> <a href="/braindump">Create New Braindump</a><br>
 <i class="bi bi-geo-alt-fill"></i> <a href="/maps">Plan an Errand</a>
 </div>
-<div class="container text-center">
+<div class="container">
 <div id="main-div" class="row" >
 <div class="col-6">
+  <div id="sub-heading-div">
 <h3>Saved To-Dos</h3>
+  </div>
+  <div id="list-items">
       <ul>
           {% for to_do in user_to_dos %}
         <form action="/delete-to-do" method="POST">
         <span id="delete{{ to_do.to_do_id }}"> 
-          <span>{{ to_do.to_do_item}}</span>
-          <button type="button" id="{{ to_do.to_do_id }}" class="delete-to-do btn btn-info btn-sm"><i class="bi bi-check-lg"></i></button>
+         <p>{{ to_do.to_do_item}}</p>
+         <button type="button" id="{{ to_do.to_do_id }}" class="delete-to-do btn btn-info btn-sm"><i class="bi bi-check-lg"></i></button>
           <input type="hidden" name="to_do_id" value="{{ to_do.to_do_id }}"></input>
         </span> 
         </form>
           {% endfor %}
       </ul>
+    </div>
 </div>
 <div class="col-6">
 <h3>Saved Braindumps</h3>
@@ -42,8 +46,8 @@
       <label>{{ bd.bd_id }}</label>
       <p id="{{ bd.bd_id }}" class="bd-text">{{bd.text_body}}</p>
       <input type="hidden" id="bd_id" name="bd_id" value="{{ bd.bd_id}}"></input>
-      <button type="submit" class="btn btn-primary">Edit Braindump</button>
-      <button class="delete-bd btn btn-primary" id="{{ bd.bd_id }}" type="button">Delete Braindump</button>
+      <button type="submit" class="btn btn-info btn-sm">Edit Braindump</button>
+      <button class="delete-bd btn btn-info btn-sm" id="{{ bd.bd_id }}" type="button">Delete Braindump</button>
     </span> 
   </form>
   

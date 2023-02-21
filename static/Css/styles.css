@@ -30,3 +30,11 @@
     background-color: yellow;
 }
 
+#sub-heading-div {
+    
+    padding-bottom: 15px;
+}
+
+#list-items {
+    align-items: center;
+}
