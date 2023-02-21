@@ -6,40 +6,45 @@
 
 
 {% block body %}
-
+<div id="main-div" class="container text-center">
 <h1>Hello, {{user_fname}}!</h1>
 <h3>What would you like to do?</h3>
-<li><a href="/reminders">Create New Reminder</a></li>
-<li><a href="/braindump">Create New Braindump</a></li>
-<li><a href="/maps">Plan My Errands</a></li>
-
-
-<h3>Saved Reminders</h3>
+<i class="bi bi-check-circle-fill"> </i><a href="/to-dos">Create New To Do</a><br>
+ <a href="/braindump">Create New Braindump</a><br>
+<a href="/maps">Plan an Errand</a>
+</div>
+<div class="container">
+<div id="main-div" class="row" >
+<div class="col-6">
+<h3>Saved To-Dos</h3>
         <ul>
-          {% for reminder in user_reminders %}
-          <li id="delete{{ reminder.ur_id }}">
-              <p>Reminder name: {{ reminder.reminder_name}}</p>
-              <p>Date: {{reminder.reminder_date}}</p>
-              <p>Repeats: {{reminder.reminder_frequency}} {{reminder.reminder_measure}}</p>
-              <input type="hidden" name="reminder_id" value="{{ reminder.ur_id}}"></input>
-              <button type="button" id="{{ reminder.ur_id }}" class="delete-reminder">Delete Reminder</button>
-          </li>
+          {% for to_do in user_to_dos %}
+          <span><id="delete{{ to_do.to_do_id }}">
+              <span>{{ to_do.to_do_item}}</span>
+              <input type="hidden" name="to_do_id" value="{{ to_do.to_do_id }}"></input>
+              <button type="button" id="{{ to_do.to_do_id }}" class="delete-to-do btn btn-primary"><i class="bi bi-check-lg"></i></button>
+          </span> 
           {% endfor %}
         </ul>
-
+</div>
+<div class="col-6">
 <h3>Saved Braindumps</h3>
 <ul>
   {% for bd in user_bds %}
-  <form action="/edit-braindump", method="POST">
-  <li id="delete{{ bd.bd_id }}" id="bd-li">
+  <form action="/edit-braindump" method="POST" id="bd-item">
+  <span id="delete{{ bd.bd_id }}">
       <label>{{ bd.bd_id }}</label>
       <p id="{{ bd.bd_id }}" class="bd-text">{{bd.text_body}}</p>
       <input type="hidden" id="bd_id" name="bd_id" value="{{ bd.bd_id}}"></input>
-      <button type="submit">Edit Braindump</button>
-      <button class="delete-bd" id="{{ bd.bd_id }}" type="button">Delete Braindump</button>
-     </li>
-    </form>
+      <button type="submit" class="btn btn-primary">Edit Braindump</button>
+      <button class="delete-bd btn btn-primary" id="{{ bd.bd_id }}" type="button">Delete Braindump</button>
+    </span> 
+  </form>
+  
   {% endfor %}
 </ul>
+</div>
+</div>
+</div>
 <script type="text/javascript" src="/static/js/app.js"></script>
 {% endblock %}

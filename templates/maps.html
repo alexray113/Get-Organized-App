@@ -2,50 +2,44 @@
 
 {% block title %}Errand Planner{% endblock %}
 {% block head %}
-    <script src="https://kit.fontawesome.com/12ab44e214.js" crossorigin="anonymous"></script>
 {% endblock %}
 {% block body %}
 
-    <div class="jumbotron">
-        <div class="container-fluid">
+    <div id="main-div" class="container text-center">
+        <div class="container text-center">
             <h1>Determine Distance and Travel Time</h1>
             <p>This page will help you calculate the total distance and time for all needed
                 errands</p>
-            <form class="form-horizontal" id="address-form">
+            <form action="/display-directions" method="POST" class="form-horizontal" id="address-form">
                 <div class="form-group">
-                    <label for="from" class="col-xs-2 control label">
-                        <i class="fa-solid fa-location-crosshairs"></i>
-                    </label>
                     <div class="col-xs-4">
-                        <input
-                            type="text"
-                            id="input1"
-                            placeholder="Enter Starting Destination Address"
-                            class="form-control"></div>
+                        <label for="from"><i class="bi bi-geo-alt-fill"></i> Starting Point:</label>
+                        <input type="text" id="input1" placeholder="Enter Starting Destination Address" class="form-control"></div>
                     </div>
                     <div class="form-group">
-                        <label for="to" class="col-xs-2 control label">
-                            <i class="fa-solid fa-location-crosshairs"></i>
-                        </label>
                         <div class="col-xs-4">
+                            <label for="to"><i class="bi bi-geo-alt-fill"></i> Destination:</label>
                             <input type="text" id="input2" placeholder="Enter Final Destination Address" class="form-control"></div>
                         </div>
                     </form>
                     <div class="col-xs-offset-2 col-xs-10">
-                        <button id="display-directions" class="btn btn-info btn-lg">
-                            <i class="fas fa-map-signs"></i>
+                        <button id="display-directions" class="btn btn-light btn-lg">
+                            <i class="bi bi-signpost-2-fill"></i>
                         </button>
                     </div>
                 </div>
                 <div class="container-fluid">
-                    <div id="map"></div>
-                    <div id="output"></div>
-
-                </div>
+                    <div id="map">
+                    </div>
+                    <div id="output">
+                    </div>
             </div>
+            <div id="link-div" class="container text-center">
             <a href='/dashboard'>Return to Dashboard</a>
+            </div>
             <script type="text/javascript" src="/static/js/maps.js"></script>
             <script
                 async="async"
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBT7tEFidZlr59xsrzm_eLkoda9trKU5Ww&libraries=places&callback=initMap"></script>
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBT7tEFidZlr59xsrzm_eLkoda9trKU5Ww&libraries=places&callback=initMap">
+            </script>
         {% endblock %}

@@ -1,12 +1,11 @@
 // delete reminders
-const deleteBtns = document.querySelectorAll(".delete-reminder");
+const deleteBtns = document.querySelectorAll(".delete-to-do");
 
 for (const rBtn of deleteBtns) {
     rBtn.addEventListener('click', (evt) => {
         evt.preventDefault();
-        console.log(typeof rBtn)
         
-        fetch('/delete-reminder', {
+        fetch('/delete-to-do', {
             method: "POST",
             body: JSON.stringify({'btn_id': rBtn.id}),
             headers: {
@@ -19,7 +18,6 @@ for (const rBtn of deleteBtns) {
         })
         .then((responseJson) => {
             document.querySelector(`#delete${rBtn.id}`).remove();
-            console.log(responseJson);
         })
 
         
@@ -27,6 +25,7 @@ for (const rBtn of deleteBtns) {
     });
 };
 
+// delete braindumps
 const deleteBdBtns = document.querySelectorAll(".delete-bd");
 
 for (const btn of deleteBdBtns) {

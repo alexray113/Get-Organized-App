@@ -18,32 +18,6 @@ let autocomplete1 = new google.maps.places.Autocomplete(input1, options);
 const input2 = document.getElementById("input2");
 let autocomplete2 = new google.maps.places.Autocomplete(input2, options);
 
-// Ask user to enter a location. Geocode the location to get its coordinates
-// and drop a marker onto the map.
-  // document.querySelector('#display-location').addEventListener('click', () => {
-  //   const startingLocation = input1.value
-
-  //   const geocoder = new google.maps.Geocoder();
-  //   geocoder.geocode({ address: startingLocation }, (results, status) => {
-  //     if (status === 'OK') {
-  //       // Get the coordinates of the user's location
-  //       const startingLocation = results[0].geometry.location;
-
-  //       // Create a marker
-  //       new google.maps.Marker({
-  //         position: startingLocation,
-  //         map,
-  //       });
-
-  //       // Zoom in on the geolocated location
-  //       map.setCenter(startingLocation);
-  //       map.setZoom(18);
-  //     } else {
-  //       alert(`Geocode was unsuccessful for the following reason: ${status}`);
-  //     }
-  //   });
-  // });
-
     // Display walking directions from origin location to destination
   // on the map
   document.querySelector('#display-directions').addEventListener('click', () => {
@@ -52,6 +26,7 @@ let autocomplete2 = new google.maps.places.Autocomplete(input2, options);
     let finalDestination = input2.value
     let startingCoords = null
     let finalCoords = null
+    
     const geocoder1 = new google.maps.Geocoder();
     geocoder1.geocode({ address: startingLocation }, (results, status) => {
       if (status === 'OK') {
@@ -103,6 +78,10 @@ let autocomplete2 = new google.maps.places.Autocomplete(input2, options);
 
     directionsService.route(determinedRoute, (response, status) => {
       if (status === 'OK') {
+        console.log(response)
+        // pulling time and distance from json response and adding to output div
+        const output = document.querySelector('#output');
+        output.innerHTML = "<div>From: " + document.getElementById("input1").value + ".<br />To: " + document.getElementById("input2").value + ".<br /> Driving distance: " + response.routes[0].legs[0].distance.text + ".<br />Duration: " + response.routes[0].legs[0].duration.text + ".</div>";
         directionsRenderer.setDirections(response);
       } else {
         alert(`Directions request unsuccessful due to: ${status}`);
@@ -110,4 +89,5 @@ let autocomplete2 = new google.maps.places.Autocomplete(input2, options);
     });
     },1000);
   });
+
 }

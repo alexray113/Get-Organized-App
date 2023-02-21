@@ -19,6 +19,7 @@ class User(db.Model):
 
     user_reminder = db.relationship("User_reminder", back_populates="user")
     user_r = db.relationship("Brain_dump", back_populates="user")
+    user_to_do = db.relationship("User_to_dos", back_populates="user")
     
 
     def __repr__(self):
@@ -36,6 +37,22 @@ class Reminder(db.Model):
 
     def __repr__(self):
         return f'<Reminders reminder_id{self.reminder_id} type={self.type}>'
+
+class User_to_dos(db.Model):
+    """User's stored to do list items"""
+
+    __tablename__ = "user_to_dos"
+
+    to_do_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    to_do_item = db.Column(db.String(100))
+
+    user = db.relationship("User", back_populates="user_to_do")
+
+    def __repr__(self):
+        return f'<User_To_Do to_do_id={self.to_do_id} user_id={self.user_id}>'
+
+
 
 class User_reminder(db.Model):
     """User's stored reminders"""

@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, Reminder, User_reminder, Brain_dump, connect_to_db
+from model import db, User, Reminder, User_to_dos, User_reminder, Brain_dump, connect_to_db
 
 # user functions
 def create_user(fname, lname, email, password):
@@ -57,6 +57,10 @@ def delete_reminder(ur_id):
 
     return "Deleted Successfully!"
 
+def get_reminder_by_date(reminder_date):
+
+    return User_reminder.query.get(reminder_date)
+
 # brain dump functions
 
 def create_braindump(user_id, text_body):
@@ -91,6 +95,26 @@ def update_bd_by_id(bd_id, text_body):
 
     return "Updated Successfully!"
 
+# to do functions
+def create_user_to_do(user_id, to_do_item):
+
+    to_do = User_to_dos(user_id=user_id, 
+            to_do_item=to_do_item)
+
+    return to_do
+
+def delete_to_do(to_do_id):
+
+    to_do = User_to_dos.query.get(to_do_id)
+    db.session.delete(to_do)
+    db.session.commit()
+
+    return "Deleted Successfully!"
+
+def get_to_do_by_id(user_id):
+    """Get and return to dos by ID"""
+
+    return User_to_dos.query.filter_by(user_id=user_id).all()
     
 if __name__ == '__main__':
     from server import app

@@ -5,6 +5,7 @@ from flask import (Flask, render_template, request, flash, session,
 
 from model import connect_to_db, db
 import crud
+import onesignal
 
 from jinja2 import StrictUndefined
 
@@ -17,7 +18,14 @@ app.jinja_env.undefined = StrictUndefined
 def view_homepage():
     """Load the homepage."""
 # renders homepage.html template
-    return render_template('homepage.html')
+    return render_template('starting-page.html')
+
+#app route to create user page
+@app.route("/create-account")
+def display_create_account():
+    """Loads account creation page"""
+
+    return render_template("create-account.html")
 
 # app route to errands page
 @app.route("/maps")
@@ -47,6 +55,13 @@ def display_reminders():
 # renders reminders.html template
     return render_template('reminders.html')
 
+# app route to to-dos page
+@app.route('/to-dos')
+def display_to_dos():
+    """Displays reminders page"""
+# renders to-do-items.html template
+    return render_template('to-do-items.html')
+
 # app route to return to user dashboard from maps, braindumps, and reminders page
 @app.route('/dashboard')
 def display_user_profile():
@@ -71,7 +86,8 @@ def show_user(user_id):
     user_fname = user_object.fname
 
 # make a list of all user reminders and add to list
-    user_reminders = crud.get_reminder_by_id(user_id)
+    # user_reminders = crud.get_reminder_by_id(user_id)
+    user_to_dos = crud.get_to_do_by_id(user_id)
             
 
 # make a list of all user braindumps and add to list
@@ -80,7 +96,7 @@ def show_user(user_id):
     
     # renders user_profile.html template and passes user object info, reminder list,
     # and bd list to jinja template variables
-    return render_template('user_profile.html', user_id=user_id, user_email=user_email, user_fname=user_fname, user_reminders=user_reminders, user_bds=user_bds)
+    return render_template('user_profile.html', user_id=user_id, user_email=user_email, user_fname=user_fname, user_to_dos=user_to_dos, user_bds=user_bds)
    
 
 @app.route("/login", methods=['POST'])
@@ -93,27 +109,33 @@ def login_user():
     # uses post request variable as argument for get_user_by email crud.py function
     # to query user database and save user_object to variable user object
     user_object = crud.get_user_by_email(user_email)
+    if user_object:
     # saves user_object password, user id, email, and first name to variables
-    db_password = user_object.password
-    user_id = user_object.user_id
-    user_email = user_object.email
-    user_fname = user_object.fname
+        db_password = user_object.password
+        user_id = user_object.user_id
+        existing_user_email = user_object.email
+        user_fname = user_object.fname
 
-    if password == db_password:
-        # stores id in session and logs user in if input password matches
-        # database password
-        session['user_id'] = user_id
-        session['email'] = user_email
-        session['fname'] = user_fname
-    
+        if password == db_password:
+            # stores id in session and logs user in if input password matches
+            # database password
+            session['user_id'] = user_id
+            session['email'] = user_email
+            session['fname'] = user_fname
+        
 
-        # flashes statement indicating login successful
-        flash("You have logged in successfully!")
-         # redirects to user profile page
-        return redirect(f'/users/{user_id}')
+            # flashes statement indicating login successful
+            flash("You have logged in successfully!")
+            # redirects to user profile page
+            return redirect(f'/users/{user_id}')
+        else:
+            # flashes statement indicating password is incorrect
+            flash("Login password incorrect.")
     else:
-        # flashes statement indicating password is incorrect
-        flash("Login password incorrect.")
+        flash("No user found. Please create an account.")
+    # if user_object.password == None:
+    #     flash("You don't have an account. Please use create an account.")
+    #     return redirect("/create-account")
     
     return render_template("user_login.html")
 
@@ -164,6 +186,8 @@ def user_sign_up():
     # pulls user id from user object and saves in session
     user_id = new_user.user_id
     session['user_id'] = user_id
+    user_email = new_user.email
+    session['user_email'] = user_email
 
 
     # redirects to user profile when sign up is successful and flashes appropriate message
@@ -175,14 +199,14 @@ def create_reminder():
     user_id = session['user_id']
     reminder_type = request.form.get('rtype')
     reminder_name = request.form.get('rname')
-    reminder_dt = request.form.get('reminderdt')
+    reminder_date = request.form.get('reminderdt')
     reminder_frequency = request.form.get('frequency-num')
     reminder_measure = request.form.get('frequencies')
 
     reminder = crud.create_user_reminder(reminder_type,
                                         user_id,
                                         reminder_name, 
-                                        reminder_dt,
+                                        reminder_date,
                                         reminder_frequency,
                                         reminder_measure
                                         )
@@ -190,8 +214,31 @@ def create_reminder():
     db.session.add(reminder)
     db.session.commit()
 
+    email_address = session['email']
+    date = reminder_date
+    text = reminder_name
+
+    onesignal.send_email()
+    print(onesignal.send_email())
+    print("**********************")
+
 
     return redirect('/reminders')
+
+@app.route('/create-to-do', methods=["POST"])
+def create_to_do():
+    # gets user id from session and pulls text from bd input form
+    user_id = session['user_id']
+    to_do = request.form.get("to-do")
+    # calls crud function to store new braindump in database and saves to varialbe
+    to_do = crud.create_user_to_do(user_id, to_do)
+                                        
+    # adds braindump to database
+    db.session.add(to_do)
+    db.session.commit()
+
+
+    return redirect('/to-dos')
 
 @app.route('/submit_bd', methods=["POST"])
 def create_bd():
@@ -209,14 +256,13 @@ def create_bd():
     return redirect('/braindump')
 
 # allows user to delete reminders
-@app.route("/delete-reminder", methods=['POST']) 
-def delete_reminder():
+@app.route("/delete-to-do", methods=['POST']) 
+def delete_to_do():
     
-    reminder_id = int(request.json.get("btn_id"))
-    delete_reminder = crud.delete_reminder(reminder_id)
+    to_do_id = int(request.json.get("btn_id"))
+    delete_to_do = crud.delete_to_do(to_do_id)
     
-
-    return delete_reminder
+    return delete_to_do
 
 #allows user to edit braindump
 @app.route("/edit-braindump", methods=['POST'])
@@ -248,6 +294,11 @@ def delete_bds():
     delete_braindump = crud.delete_bd(bd_id)
 
     return delete_braindump
+
+# @app.route("/display-directions", methods=['POST'])
+# def display_directions():
+
+#     time = request.json.get(routes: routes[0].legs[0].duration.text)
 
 
 
