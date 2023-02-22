@@ -201,6 +201,7 @@ def create_to_do():
     # adds braindump to database
     db.session.add(to_do)
     db.session.commit()
+    flash("Your new to do was created successfully!")
 
 
     return redirect('/to-dos')
@@ -210,23 +211,23 @@ def create_to_do():
 def delete_to_do():
     
     to_do_id = int(request.json.get("btn_id"))
-    print(to_do_id)
-    print("************")
-    delete_to_do = crud.delete_to_do(to_do_id)
+    crud.delete_to_do(to_do_id)
     
-    return delete_to_do
+    return "OK"
 
 @app.route('/submit_bd', methods=["POST"])
 def create_bd():
     # gets user id from session and pulls text from bd input form
     user_id = session['user_id']
     text_body = request.form.get("bd_content")
+    bd_title = request.form.get("bd-title")
     # calls crud function to store new braindump in database and saves to varialbe
-    braindump = crud.create_braindump(user_id, text_body)
+    braindump = crud.create_braindump(user_id, bd_title, text_body)
                                         
     # adds braindump to database
     db.session.add(braindump)
     db.session.commit()
+    flash("Your new braindump was created successfully!")
 
 
     return redirect('/braindump')
@@ -239,8 +240,9 @@ def edit_bds():
     bd_id = request.form.get("bd_id")
     bd_object = crud.return_bd_by_id(bd_id)
     bd_text = bd_object.text_body
+    bd_title = bd_object.bd_title
 
-    return render_template("saved_braindumps.html", bd_text=bd_text, bd_id=bd_id)
+    return render_template("saved_braindumps.html", bd_text=bd_text, bd_title=bd_title, bd_id=bd_id)
 
 @app.route("/update-bd", methods=['POST'])
 def update_bds():
@@ -248,20 +250,19 @@ def update_bds():
     text_body = request.form.get("edit-bd-text")
     bd_id = int(request.form.get("bd_id"))
     
-    updated_bd = crud.update_bd_by_id(bd_id, text_body)
+    crud.update_bd_by_id(bd_id, text_body)
 
     return redirect(f'/users/{user_id}') 
 
         
 
-@app.route("/delete-braindumps", methods=['POST'])
+@app.route("/delete-bd", methods=['POST'])
 def delete_bds():
 
     bd_id = int(request.json.get("bd_btn_id"))
-    print(type(bd_id))
-    delete_braindump = crud.delete_bd(bd_id)
+    crud.delete_bd(bd_id)
 
-    return delete_braindump
+    return "OK"
 
 
 

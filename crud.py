@@ -63,9 +63,9 @@ def get_reminder_by_date(reminder_date):
 
 # brain dump functions
 
-def create_braindump(user_id, text_body):
+def create_braindump(user_id, bd_title, text_body):
 
-    braindump = Brain_dump(user_id=user_id, text_body=text_body)
+    braindump = Brain_dump(user_id=user_id, bd_title=bd_title, text_body=text_body)
 
     return braindump
 
@@ -75,7 +75,7 @@ def delete_bd(bd_id):
     db.session.delete(bd)
     db.session.commit()
 
-    return "Deleted Successfully!"
+    return print("**********Deleted Successfully!********")
 
 def get_bd_by_id(user_id):
     """Get and return braindumps by ID"""
@@ -109,7 +109,7 @@ def delete_to_do(to_do_id):
     db.session.delete(to_do)
     db.session.commit()
 
-    return "Deleted Successfully!"
+    return print("Deleted Successfully!")
 
 def get_to_do_by_id(user_id):
     """Get and return to dos by ID"""

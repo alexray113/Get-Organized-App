@@ -5,10 +5,15 @@
 {% endblock %}
 {% block body %}
 
-    <div id="main-div" class="container">
+        <div id="heading-div">
             <h1>Determine Distance and Travel Time</h1>
             <p>Knowing the time it takes to travel to a location will help you better plan when to leave!</p>
-        <form action="/display-directions" method="POST" class="form-horizontal" id="address-form">
+        </div>
+        <div class="container-fluid bd-to-do-div" id="map-page-div">
+            <div id="map-wrapper" class="row">
+            <div class="row" id="map"></div>
+            </div>
+            <form action="/display-directions" method="POST" class="form-horizontal" id="address-form">
             <label for="from"><i class="bi bi-geo-alt-fill"></i> Starting Point:</label>
             <input class="form-control" type="text" id="input1" placeholder="Enter Starting Destination Address">
             <label for="to"><i class="bi bi-geo-alt-fill"></i> Destination:</label>
@@ -17,21 +22,13 @@
             <button id="display-directions" class="btn btn-info">
             <i class="bi bi-signpost-2-fill"></i>
             </button>
-    </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-6">
-                    <div id="map"></div>
-                </div>
-                <div class="col-6">
+        <div class="text-center">
                     <div id="output"></div>
-                </div>
-            </div>
         </div>
-            <div id="link-div" class="container text-center">
-            <a href='/dashboard'>Return to Dashboard</a>
-            </div>
     </div>
+            <div id="link-div" class="container text-center">
+            <a class="primary-link" href='/dashboard'>Return to Dashboard</a>
+            </div>
             <script type="text/javascript" src="/static/js/maps.js"></script>
             <script
                 async="async"

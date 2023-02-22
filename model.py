@@ -80,6 +80,7 @@ class Brain_dump(db.Model):
 
     bd_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    bd_title = db.Column(db.String(50))
     text_body = db.Column(db.Text)
 
     user = db.relationship("User", back_populates="user_r")

@@ -1,40 +1,146 @@
 
-#main-div {
-    padding-top: 50px;
+/* base elements */
+
+body {
+    background-color: #FAF5EF;
+ }
+
+ h1, h3, h5 {
+    
+    font-family: 'Barlow Condensed', sans-serif;
+} 
+
+input, span, textarea, li, label, a, p {
+    font-family: 'Montserrat', sans-serif;
 }
 
+
+.btn {
+    background-color: #AA7488;
+    border-color: #92637A;
+}
+
+.btn:hover {
+    background-color: #92637A;
+    border-color: #AA7488;
+
+}
+
+.navbar {
+    background-color: #E4C9CE; 
+}
+
+
+/* maps */
 
 #map {
-    align-items: center;
-    width: 500px;
-    height: 500px;
+
+    width: 600px;
+    height: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
 }
+
+#map-wrapper {
+    align-self: center;
+}
+
+#map-page-div {
+    font-size: 30px;
+    background-color: #E4C9CE; 
+}
+
+
+/* user profile */
+
+#profile-nav-div {
+    margin-bottom: 10px;
+}
+
+.user-page-column {
+    border: 1px solid black;
+    background-color: #FAF5EF;
+    overflow: hidden;
+}
+
+
+/* braindumps */
 
 #bd-item {
-    padding-bottom: 25;
+    margin-bottom: 10px;
 }
 
+#bd-text-area {
+    margin-top: 20px;
+}
+
+#bd-titles {
+    padding-top: 20px;
+}
+
+.bd-btn {
+    margin-bottom: 5px;
+}
+
+.bd-text {
+    flex-wrap: wrap;
+}
+
+/* to do's */
+
+#to-do-item {
+    padding-top: 10px;
+    align-items: center;
+}
+
+.to-do-div {
+    text-align: left;
+    margin-bottom: 1em;
+}
+
+/* login  */
+
+#fn-ln-input {
+    padding-bottom: 20px;
+}
+
+
+/* site wide styling */
+
 #heading-div {
-    padding-bottom: 50px;
+    margin: 50px;
+    text-align: center;
 }
 
 #link-div {
+    text-align: center;
     padding-top: 100px;
-}
-
-#form-div {
-    justify-items: left;
-}
-
-.flash-msg {
-    background-color: yellow;
 }
 
 #sub-heading-div {
     
     padding-bottom: 15px;
+    padding-top: 15px;
 }
 
-#list-items {
-    align-items: center;
+#content-div {
+    background-color: #E4C9CE; 
+    text-align: center;
+    padding: 50px;
 }
+
+.flash-msg {
+    text-shadow: 1px 1px 2px #92637A;
+}
+
+
+
+
+
+
+
+
+
+
+

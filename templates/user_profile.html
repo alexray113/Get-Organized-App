@@ -1,60 +1,97 @@
 {% extends 'base.html' %}
 
 {% block title %}User Dashboard{% endblock %}
-{% block head %}
-{% endblock %}
-
+{% block head %}{% endblock %}
 
 {% block body %}
-<div id="main-div" class="container text-center">
-  <div id="heading-div">
-<h1>Hello, {{user_fname}}!</h1>
-  </div>
 
-<h3>What would you like to do?</h3>
-<div class="container text-center">
-<i class="bi bi-check-circle-fill"> </i> <a href="/to-dos">Create New To Do</a><br>
-<i class="bi bi-emoji-smile-fill"></i> <a href="/braindump">Create New Braindump</a><br>
-<i class="bi bi-geo-alt-fill"></i> <a href="/maps">Plan an Errand</a>
-</div>
-<div class="container">
-<div id="main-div" class="row" >
-<div class="col-6">
-  <div id="sub-heading-div">
-<h3>Saved To-Dos</h3>
-  </div>
-  <div id="list-items">
-      <ul>
-          {% for to_do in user_to_dos %}
-        <form action="/delete-to-do" method="POST">
-        <span id="delete{{ to_do.to_do_id }}"> 
-         <p>{{ to_do.to_do_item}}</p>
-         <button type="button" id="{{ to_do.to_do_id }}" class="delete-to-do btn btn-info btn-sm"><i class="bi bi-check-lg"></i></button>
-          <input type="hidden" name="to_do_id" value="{{ to_do.to_do_id }}"></input>
-        </span> 
-        </form>
-          {% endfor %}
-      </ul>
+    <div id="heading-div">
+        <h1>Hello,
+            {{user_fname}}!</h1>
     </div>
-</div>
-<div class="col-6">
-<h3>Saved Braindumps</h3>
-<ul>
-  {% for bd in user_bds %}
-  <form action="/edit-braindump" method="POST" id="bd-item">
-  <span id="delete{{ bd.bd_id }}">
-      <label>{{ bd.bd_id }}</label>
-      <p id="{{ bd.bd_id }}" class="bd-text">{{bd.text_body}}</p>
-      <input type="hidden" id="bd_id" name="bd_id" value="{{ bd.bd_id}}"></input>
-      <button type="submit" class="btn btn-info btn-sm">Edit Braindump</button>
-      <button class="delete-bd btn btn-info btn-sm" id="{{ bd.bd_id }}" type="button">Delete Braindump</button>
-    </span> 
-  </form>
-  
-  {% endfor %}
-</ul>
-</div>
-</div>
-</div>
+    <div id="profile-nav-div" class="container">
+        <div class="dropdown">
+            <button
+                class="btn btn-info dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
+                What would you like to do?
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" href="/to-dos">Create New To Do</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="/braindump">Create New Braindump</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="/maps">Plan an Errand</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="content-div" class="container">
+        <div class="row">
+            <div class="col-5 user-page-column">
+                <div id="sub-heading-div">
+                    <h3>Saved To-Dos</h3>
+                </div>
+                <div id="list-items">
+                    <ul>
+                        {% for to_do in user_to_dos %}
+                            <div class="to-do-div" id="delete{{ to_do.to_do_id }}">
+                                <form action="/delete-to-do" method="POST">
+                                    <button
+                                        type="button"
+                                        id="{{ to_do.to_do_id }}"
+                                        class="delete-to-do btn btn-info btn-sm">
+                                        <i class="bi bi-check-lg"></i>
+                                    </button>
+                                    <span id="to-do-item">{{ to_do.to_do_item}}</span>
+                                    <input type="hidden" name="to_do_id" value="{{ to_do.to_do_id }}"></input>
+                                </form>
+                            </div>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-2"></div>
+            <div class="col-5 user-page-column">
+                <div id="sub-heading-div">
+                    <h3>Saved Braindumps</h3>
+                </div>
+                <ul>
+                    {% for bd in user_bds %}
+                        <div id="delete{{ bd.bd_id }}">
+                            <form action="/edit-braindump" method="POST" id="bd-item">
+                                <label id="bd-titles">
+                                    <strong>{{ bd.bd_title }}</strong>
+                                </label>
+                                <div id="{{ bd.bd_id }}" class="bd-text">{{bd.text_body}}</div>
+                                <input type="hidden" id="bd_id" name="bd_id" value="{{ bd.bd_id}}"></input>
+                                <div class="">
+                                    <button type="submit" class="btn btn-info btn-sm">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </button>
+                                    <button
+                                        class="bd-btn delete-bd btn btn-info btn-sm"
+                                        id="{{ bd.bd_id }}"
+                                        type="button">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </div>
+                            </form>
+
+                        </div>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+
 <script type="text/javascript" src="/static/js/app.js"></script>
 {% endblock %}

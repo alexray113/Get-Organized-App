@@ -5,13 +5,13 @@
 
 {% block body %}
 
-    <div id="main-div" class="container text-center">
+  
       <div id="heading-div">
-      <h2>Create an Account</h2>
+      <h1>Create an Account</h1>
       </div>
-      <div id="form-div">
+      <div class="container" id="content-div">
           <form action="/create-account" method="POST">
-            <div class="input-group">
+            <div class="input-group" id="fn-ln-input">
               <span class="input-group-text">First and last name</span>
               <input type="text" name="fname" aria-label="First name" class="form-control">
               <input type="text" name="lname" aria-label="Last name" class="form-control">
@@ -27,7 +27,7 @@
             <input class="btn btn-info" type="submit" value="Create Account">
           </form>
       </div>
-    </div>
+  
                             
 
 {% endblock %}

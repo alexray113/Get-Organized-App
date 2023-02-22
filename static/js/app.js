@@ -14,12 +14,15 @@ for (const toDoBtn of deleteBtns) {
                 
         })
 
-        .then((response) => {console.log(response)
-            return response
-        })
+        .then((response) => response.text())
         .then((responseJson) => {
+            if (responseJson == "OK") {
             document.querySelector(`#delete${toDoBtn.id}`).remove();
             console.log(responseJson)
+            }
+            else {
+                alert("To do not deleted successfully")
+            }
         })
 
         
@@ -34,7 +37,7 @@ for (const btn of deleteBdBtns) {
     btn.addEventListener('click', (evt) => {
         evt.preventDefault();
 
-        fetch('/delete-braindumps', {
+        fetch('/delete-bd', {
             method: "POST",
             body: JSON.stringify({'bd_btn_id': btn.id}),
             headers: {
@@ -42,12 +45,15 @@ for (const btn of deleteBdBtns) {
                     },
         })
 
-        .then((response) => {console.log(response)
-            return response
-        })
+        .then((response) => response.text())
         .then((responseJson) => {
-            document.querySelector(`#delete${btn.id}`).remove();
+            if (responseJson == "OK") {
+                document.querySelector(`#delete${btn.id}`).remove();
             console.log(responseJson);
+            }
+            else {
+                alert("Braindump not deleted")
+            }
         })
 
         

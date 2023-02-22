@@ -3,25 +3,27 @@
 {% block title %}Brain Dumps{% endblock %}
 {% block head %}{% endblock %}
 {% block body %}
-    <div id="main-div" class="container text-center">
-        <div class="braindump">
-            <header id="header">
+   
+            <div id="heading-div">
                 <h1>Create a Brain Dump</h1>
-            </header>
-            <main class="main" id="bd-main">
+            </div>
+            
+            <div class="container-fluid bd-to-do-div" id="content-div">
                 <form action="/submit_bd" id="bd-form" method="POST">
+                    <input type="text" name="bd-title" placeholder="Add a title to your braindump here:" class="form-control">
                     <textarea
-                        rows="7"
-                        cols="60"
+                        id="bd-text-area"
+                        class="form-control"
                         name="bd_content"
                         placeholder="Take some time to empty your brain here..."></textarea>
                     <br>
-                        <button type="submit" name="submit" value="submit">Submit</button>
+                        <button type="submit" class="btn btn-info" name="submit" value="submit">Submit</button>
                     </form>
                 </main>
             </div>
+        <div id="link-div">
+            <a class="primary-link" href='/dashboard'>Return to Dashboard</a>
         </div>
-
-        <a href='/dashboard'>Return to Dashboard</a>
+    
 
     {% endblock %}

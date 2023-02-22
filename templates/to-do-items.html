@@ -3,26 +3,26 @@
 {% block title %}Reminders{% endblock %}
 
 {% block body %}
-    <div id="main-div" class="container text-center">
-        <div class="heading-div">
-                <h2>Create New To Do List Item</h2>
+    <!-- <div id="main-div" class="container text-center"> -->
+        <div id="heading-div">
+                <h1>Create New To Do List Item</h1>
         </div>
-            <main class="main" id="to-do-main">
+        <div class="container-fluid bd-to-do-div" id="content-div">
+            <p>Type in your to do item and press the submit button below.
+            Your to do list can be accessed on your user dashboard.</p>
                 <form action="/create-to-do" id="to-do-form" method="POST">
-                    <label for="to-do-name">To Do:</label>
-                    <br>
-                        <input class="to-do-value form-control" type="text" id="to-do-name" name="to-do">
-                            <br>
-                                <button type="submit" name="submit" class="btn btn-info" value="submit">Submit</button>
-                            </form>
-                        </main>
+                    <h5 for="to-do-name">To Do:</h5>
+                    <input class="to-do-value form-control" type="text" id="to-do-name" name="to-do"><br>
+                    <button type="submit" name="submit" class="btn btn-info" value="submit">Submit</button>
+                </form>
+        </div>
                     
                 
 
                     <div id="link-div"> 
-                    <a href='/dashboard'>Return to Dashboard</a>
+                    <a class="primary-link" href='/dashboard'>Return to Dashboard</a>
                     </div>
-                </div>
+                <!-- </div> -->
     
                          
             {% endblock %}
