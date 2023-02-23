@@ -15,7 +15,7 @@ class User(db.Model):
     fname = db.Column(db.String(30))
     lname = db.Column(db.String(50))
     email = db.Column(db.String(50), unique=True, nullable=False)
-    password = db.Column(db.String(50),nullable=False)
+    password = db.Column(db.Text,nullable=False)
 
     user_reminder = db.relationship("User_reminder", back_populates="user")
     user_r = db.relationship("Brain_dump", back_populates="user")
@@ -24,19 +24,6 @@ class User(db.Model):
 
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email}>'
-
-class Reminder(db.Model):
-    """A type of reminder"""
-
-    __tablename__ = "reminder"
-
-    reminder_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    type = db.Column(db.String(50))
-
-    reminder_rel = db.relationship("User_reminder", back_populates="reminder")
-
-    def __repr__(self):
-        return f'<Reminders reminder_id{self.reminder_id} type={self.type}>'
 
 class User_to_dos(db.Model):
     """User's stored to do list items"""
@@ -60,7 +47,6 @@ class User_reminder(db.Model):
     __tablename__ = "user_reminder"
 
     ur_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    reminder_id = db.Column(db.Integer, db.ForeignKey('reminder.reminder_id'))
     reminder_name = db.Column(db.String(50))
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))      
     reminder_date = db.Column(db.DateTime)
@@ -68,7 +54,7 @@ class User_reminder(db.Model):
     reminder_measure = db.Column(db.String(30))
 
     user = db.relationship("User", back_populates="user_reminder")
-    reminder = db.relationship("Reminder", back_populates='reminder_rel')
+    
 
     def __repr__(self):
         return f'<User_Reminder ur_id={self.ur_id} user_id={self.user_id}>'

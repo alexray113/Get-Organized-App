@@ -6,11 +6,14 @@ from flask import (Flask, render_template, request, flash, session,
 from model import connect_to_db, db
 import crud
 
+from flask_bcrypt import Bcrypt
+
 from jinja2 import StrictUndefined
 
 app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
+bcrypt = Bcrypt(app)
 
 # app route to homepage
 @app.route("/")
@@ -18,6 +21,12 @@ def view_homepage():
     """Load the homepage."""
 # renders homepage.html template
     return render_template('starting-page.html')
+
+# app route to carousel
+@app.route("/carousel")
+def display_carousel():
+
+    return render_template('carousel-page.html')
 
 #app route to create user page
 @app.route("/create-account")
@@ -46,13 +55,6 @@ def display_braindump():
     """Displays braindump page"""
 # renders braindump.html template
     return render_template('braindump.html')
-
-# app route to reminders page
-@app.route('/reminders')
-def display_reminders():
-    """Displays reminders page"""
-# renders reminders.html template
-    return render_template('reminders.html')
 
 # app route to to-dos page
 @app.route('/to-dos')
@@ -109,6 +111,7 @@ def login_user():
     password = request.form.get('password')
     # uses post request variable as argument for get_user_by email crud.py function
     # to query user database and save user_object to variable user object
+    
     user_object = crud.get_user_by_email(user_email)
     if user_object:
     # saves user_object password, user id, email, and first name to variables
@@ -165,6 +168,8 @@ def user_sign_up():
     password = request.form.get('password')
     # passes user_email variable to get_user_by_email crud.py function to query
     # database and check for existence of user
+    
+    # hash password
     if crud.get_user_by_email(user_email):
         # if user exists flashes message
         flash('This user already exists. Please enter a new email.')

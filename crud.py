@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, Reminder, User_to_dos, User_reminder, Brain_dump, connect_to_db
+from model import db, User, User_to_dos, User_reminder, Brain_dump, connect_to_db
 
 # user functions
 def create_user(fname, lname, email, password):
@@ -24,42 +24,6 @@ def get_user_by_email(email):
     """Get and return user by ID"""
 
     return User.query.filter(User.email == email).first()
-
-# reminder functions
-
-def create_reminder_type(type):
-
-    reminder_type = Reminder(type=type)
-
-    return reminder_type
-
-def create_user_reminder(reminder_id, user_id, reminder_name, reminder_date, reminder_frequency, reminder_measure):
-
-    reminder = User_reminder(reminder_id=reminder_id, 
-                            user_id=user_id, 
-                            reminder_name = reminder_name,
-                            reminder_date=reminder_date, 
-                            reminder_frequency=reminder_frequency, 
-                            reminder_measure=reminder_measure)
-
-    return reminder
-
-def get_reminder_by_id(user_id):
-    """Get and return reminder by ID"""
-
-    return User_reminder.query.filter_by(user_id=user_id).all()
-
-def delete_reminder(ur_id):
-
-    reminder = User_reminder.query.get(ur_id)
-    db.session.delete(reminder)
-    db.session.commit()
-
-    return "Deleted Successfully!"
-
-def get_reminder_by_date(reminder_date):
-
-    return User_reminder.query.get(reminder_date)
 
 # brain dump functions
 

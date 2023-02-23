@@ -17,12 +17,6 @@ os.system('createdb reminders')
 model.connect_to_db(server.app)
 model.db.create_all()
 
-# reminder types
-reminder_email = crud.create_reminder_type('email')
-model.db.session.add(reminder_email)
-reminder_push = crud.create_reminder_type('push')
-model.db.session.add(reminder_push)
-
 
 # loop that generates ten user objects
 

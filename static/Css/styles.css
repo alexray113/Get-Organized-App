@@ -1,8 +1,36 @@
+/* site wide styling */
+
+#heading-div {
+    margin: 50px;
+    text-align: center;
+}
+
+#link-div {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#sub-heading-div {
+    
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+#content-div {
+    background-color: #E4C9CE; 
+    text-align: center;
+    padding: 150px;
+}
+
+.flash-msg {
+    text-shadow: 1px 1px 2px #92637A;
+}
 
 /* base elements */
 
 body {
     background-color: #FAF5EF;
+    margin-bottom: 50px;
  }
 
  h1, h3, h5 {
@@ -12,6 +40,8 @@ body {
 
 input, span, textarea, li, label, a, p {
     font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-weight: 100;
 }
 
 
@@ -28,6 +58,10 @@ input, span, textarea, li, label, a, p {
 
 .navbar {
     background-color: #E4C9CE; 
+}
+
+.navbar-ul {
+    font-size: 15px !important;
 }
 
 
@@ -50,7 +84,6 @@ input, span, textarea, li, label, a, p {
     font-size: 30px;
     background-color: #E4C9CE; 
 }
-
 
 /* user profile */
 
@@ -79,12 +112,9 @@ input, span, textarea, li, label, a, p {
     padding-top: 20px;
 }
 
-.bd-btn {
-    margin-bottom: 5px;
-}
-
 .bd-text {
     flex-wrap: wrap;
+    margin-bottom: 10px;
 }
 
 /* to do's */
@@ -115,7 +145,7 @@ input, span, textarea, li, label, a, p {
 
 #link-div {
     text-align: center;
-    padding-top: 100px;
+    margin-top: 20px;
 }
 
 #sub-heading-div {
@@ -127,20 +157,14 @@ input, span, textarea, li, label, a, p {
 #content-div {
     background-color: #E4C9CE; 
     text-align: center;
-    padding: 50px;
+    padding: 150px;
+    border: 2px solid #92637A;
 }
 
 .flash-msg {
     text-shadow: 1px 1px 2px #92637A;
 }
 
-/* carousel */
-
-/* .carousel-inner > .item >img{
-    min-height : 150px;
-    max-height : 150px;
-    width : 75%;
-  } */
 
 
 

@@ -11,7 +11,8 @@
                 <form action="/update-bd"  method="POST">
                     <input type="text" class="form-control" value="{{ bd_title }}">
                     <input type="hidden" id="bd_id" name="bd_id" value="{{ bd_id}}"></input>
-                    <textarea class="form-control" id="bd-text-area" name="edit-bd-text">{{ bd_text }}</textarea>
+                    <textarea class="form-control" id="bd-text-area" name="edit-bd-text" rows="10"
+                    cols="50">{{ bd_text }}</textarea>
                     <br>
                         <button type="submit" name="{{ bd_id }}" value="submit">Submit</button>
                     </form>
