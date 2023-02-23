@@ -54,10 +54,6 @@ input, span, textarea, li, label, a, p {
 
 /* user profile */
 
-#bd-titles {
-    padding-top: 20px;
-}
-
 #profile-nav-div {
     margin-bottom: 10px;
 }
@@ -68,27 +64,40 @@ input, span, textarea, li, label, a, p {
     overflow: hidden;
 }
 
-.bd-text {
-    flex-wrap: wrap;
+
+/* braindumps */
+
+#bd-item {
     margin-bottom: 10px;
 }
 
-.bd-div {
-    text-align: left;
+#bd-text-area {
+    margin-top: 20px;
+}
+
+#bd-titles {
+    padding-top: 20px;
+}
+
+.bd-btn {
+    margin-bottom: 5px;
+}
+
+.bd-text {
+    flex-wrap: wrap;
+}
+
+/* to do's */
+
+#to-do-item {
+    padding-top: 10px;
+    align-items: center;
 }
 
 .to-do-div {
     text-align: left;
     margin-bottom: 1em;
 }
-
-
-/* braindumps */
-
-#bd-text-area {
-    margin-top: 20px;
-}
-
 
 /* login  */
 
@@ -100,13 +109,13 @@ input, span, textarea, li, label, a, p {
 /* site wide styling */
 
 #heading-div {
-    margin: 25px;
+    margin: 50px;
     text-align: center;
 }
 
 #link-div {
     text-align: center;
-    margin-top: 20px
+    padding-top: 100px;
 }
 
 #sub-heading-div {
@@ -118,7 +127,7 @@ input, span, textarea, li, label, a, p {
 #content-div {
     background-color: #E4C9CE; 
     text-align: center;
-    padding: 150px;
+    padding: 50px;
 }
 
 .flash-msg {

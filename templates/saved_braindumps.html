@@ -9,10 +9,7 @@
             </div>
             <div class="container-fluid bd-to-do-div" id="content-div">
                 <form action="/update-bd"  method="POST">
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="form-input">Title:</span>
-                        <input type="text" class="form-control" name="edit-bd-input" value="{{ bd_title }}" aria-describedby="basic-addon2">
-                      </div>
+                    <input type="text" class="form-control" value="{{ bd_title }}">
                     <input type="hidden" id="bd_id" name="bd_id" value="{{ bd_id}}"></input>
                     <textarea class="form-control" id="bd-text-area" name="edit-bd-text">{{ bd_text }}</textarea>
                     <br>

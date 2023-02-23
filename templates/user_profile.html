@@ -63,7 +63,7 @@
                 </div>
                 <ul>
                     {% for bd in user_bds %}
-                        <div class="bd-div" id="delete{{ bd.bd_id }}">
+                        <div id="delete{{ bd.bd_id }}">
                             <form action="/edit-braindump" method="POST" id="bd-item">
                                 <label id="bd-titles">
                                     <strong>{{ bd.bd_title }}</strong>

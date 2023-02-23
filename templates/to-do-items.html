@@ -12,10 +12,7 @@
             Your to do list can be accessed on your user dashboard.</p>
                 <form action="/create-to-do" id="to-do-form" method="POST">
                     <h5 for="to-do-name">To Do:</h5>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="form-input">To Do:</i></span>
-                        <input type="text" class="form-control" name="to-do-input" placeholder="Write your to do item here" aria-describedby="basic-addon2">
-                      </div>
+                    <input class="to-do-value form-control" type="text" id="to-do-name" name="to-do"><br>
                     <button type="submit" name="submit" class="btn btn-info" value="submit">Submit</button>
                 </form>
         </div>
